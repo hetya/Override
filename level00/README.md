@@ -1,4 +1,4 @@
-apres analyse du programme on peut voir que le programme est compose d'une condition qui est la suivante :
+After analyzing the program, we observed that it contains a condition as follows:
 
 ```c
     if (*((int *)&v1) != 5276)
@@ -8,8 +8,7 @@ apres analyse du programme on peut voir que le programme est compose d'une condi
     }
 ```
 
-on en deduit donc que la reponse est 5276
-on essaye :
+From this, we deduce that the correct answer is 5276. Let's try it:
 
 ```
 level00@OverRide:~$ ./level00 
