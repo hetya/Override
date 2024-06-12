@@ -4,9 +4,9 @@ int clear_stdin()
 {
   int result;
 
-  while (result != 16 && result != 255 )
+  while ((char)result != '\n')
     result = getchar();
-  return result;
+  return;
 }
 
 
@@ -24,14 +24,14 @@ int get_unum()
 
 int store_number(int a1)
 {
-  unsigned int unum;
-  unsigned int v3;
+  unsigned int nb;
+  unsigned int index;
 
   printf(" Number: ");
-  unum = get_unum();
+  nb = get_unum();
   printf(" Index: ");
-  v3 = get_unum();
-  if ( v3 == 3 * (v3 / 3) || HIBYTE(unum) == 183 )
+  index = get_unum();
+  if ( index % 3 == 0 || HIBYTE(nb) == 183 )
   {
     puts(" *** ERROR! ***");
     puts("   This index is reserved for wil!");
@@ -40,7 +40,7 @@ int store_number(int a1)
   }
   else
   {
-    *(_DWORD *)(a1 + 4 * v3) = unum;
+    *(_DWORD *)(a1 + 4 * index) = nb;
     return 0;
   }
 }
@@ -49,11 +49,11 @@ int store_number(int a1)
 
 int read_number(int a1)
 {
-  int unum;
+  int index;
 
   printf(" Index: ");
-  unum = get_unum();
-  printf(" Number at data[%u] is %u\n", unum, *(_DWORD *)(a1 + 4 * unum));
+  index = get_unum();
+  printf(" Number at data[%u] is %u\n", index, *(_DWORD *)(a1 + 4 * index));
   return 0;
 }
 
