@@ -4,7 +4,7 @@ We also noticed an unprotected printf function used to display the username, whi
 
 First, let's test this:
 
-```
+``` Shell
 level02@OverRide:~$ ./level02
 ===== [ Secure Access System v1.0 ] =====
 /***************************************\
@@ -22,7 +22,7 @@ We can see five pointers:
 
 Converting these to ASCII gives us: unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M.
 
-```
+``` Shell
 level02@OverRide:~$ ./level02
 ===== [ Secure Access System v1.0 ] =====
 /***************************************\
@@ -40,13 +40,13 @@ Next, we reverse the pointer order before converting to ASCII:
 
 H3gPfK9M5J5hnGXs7zqCWNgXEAJ5as9QunPR47hH
 
-This gives us: H3gPfK9M5J5hnGXs7zqCWNgXEAJ5as9QunPR47hH.
+This gives us: `H3gPfK9M5J5hnGXs7zqCWNgXEAJ5as9QunPR47hH`.
 
-Reversing this string, we get: Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H.
+Reversing this string, we get: `Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H`.
 
 Let's test this:
 
-```
+``` Shell
 level02@OverRide:~$ ./level02
 ===== [ Secure Access System v1.0 ] =====
 /***************************************\
