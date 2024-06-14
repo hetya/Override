@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-int clear_stdin()
+void clear_stdin()
 {
-  int result;
+  char result;
 
-  while ((char)result != '\n')
+  while (result != '\n')
     result = getchar();
   return;
 }
@@ -12,17 +12,17 @@ int clear_stdin()
 
 int get_unum()
 {
-  int v1[3];
+  int input = 0;
 
-  v1[0] = 0;
+  input = 0;
   fflush(stdout);
-  scanf("%u", v1);
+  scanf("%u", input);
   clear_stdin();
-  return v1[0];
+  return input;
 }
 
 
-int store_number(int a1)
+int store_number(int *tab)
 {
   unsigned int nb;
   unsigned int index;
@@ -31,7 +31,7 @@ int store_number(int a1)
   nb = get_unum();
   printf(" Index: ");
   index = get_unum();
-  if ( index % 3 == 0 || HIBYTE(nb) == 183 )
+  if ( index % 3 == 0 || nb >> 8 == 183 ) //#define HIBYTE(x) ((x >> 8) & 0xFF)
   {
     puts(" *** ERROR! ***");
     puts("   This index is reserved for wil!");
@@ -40,43 +40,31 @@ int store_number(int a1)
   }
   else
   {
-    *(_DWORD *)(a1 + 4 * index) = nb;
+    tab[index] = nb;
     return 0;
   }
 }
 
 
 
-int read_number(int a1)
+int read_number(int *tab)
 {
   int index;
 
   printf(" Index: ");
   index = get_unum();
-  printf(" Number at data[%u] is %u\n", index, *(_DWORD *)(a1 + 4 * index));
+  printf(" Number at data[%u] is %u\n", index, tab[index]);
   return 0;
 }
 
 
 int main(int argc, const char **argv, const char **envp)
 {
-  _BYTE v6[400];
-  int number;
-  char s[4];
-  int v9;
-  int v10;
-  int v11;
-  int v12;
-  unsigned int v13;
+	int		ret = 0;
+	char	buffer[20] = {0};
+	int		tab[100] = {0};
 
-  v13 = __readgsdword(0x14u);
-  number = 0;
-  *(_DWORD *)s = 0;
-  v9 = 0;
-  v10 = 0;
-  v11 = 0;
-  v12 = 0;
-  memset(v6, 0, sizeof(v6));
+  memset(tab, 0, sizeof(tab));
   while ( *argv )
   {
     memset((void *)*argv, 0, strlen(*argv));
@@ -103,28 +91,24 @@ int main(int argc, const char **argv, const char **envp)
   while ( 1 )
   {
     printf("Input command: ");
-    command_return = 1;
-    fgets(s, 20, stdin);
-    s[strlen(s) - 1] = 0;
-    if ( !memcmp(s, "store", 5u) )
+    ret = 1;
+    fgets(buffer, 20, stdin);
+    buffer[strlen(buffer) - 1] = 0;
+    if ( !memcmp(buffer, "store", 5u) )
     {
-      command_return = store_number((int)v6);
+      ret = store_number(tab);
     }
-    else if ( !memcmp(s, "read", 4u) )
+    else if ( !memcmp(buffer, "read", 4u) )
     {
-      command_return = read_number((int)v6);
+      ret = read_number(tab);
     }
-    else if ( !memcmp(s, "quit", 4u) )
+    else if ( !memcmp(buffer, "quit", 4u) )
       return 0;
 
-    if ( command_return )
-      printf(" Failed to do %s command\n", s);
+    if ( ret )
+      printf(" Failed to do %s command\n", buffer);
     else
-      printf(" Completed %s command successfully\n", s);
-    *(_DWORD *)s = 0;
-    v9 = 0;
-    v10 = 0;
-    v11 = 0;
-    v12 = 0;
+      printf(" Completed %s command successfully\n", buffer);
+    bzero(buffer);
   }
 }

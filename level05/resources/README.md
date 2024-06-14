@@ -41,11 +41,8 @@ on recupere l'adresse de exit :
 (gdb) info function exit
 All functions matching regular expression "exit":
 
-Non-debugging symbols:
-0x08048370  exit
-0x08048370  exit@plt
-(gdb) x/i 0x08048370
-   0x8048370 <exit@plt>:        jmp    *0x80497e0
+(gdb) p exit
+$3 = {<text variable, no debug info>} 0xf7e5eb70 <exit>
 
 
 

