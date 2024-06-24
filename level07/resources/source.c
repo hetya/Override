@@ -2,9 +2,9 @@
 
 void clear_stdin()
 {
-  char result;
+  int result;
 
-  while (result != '\n')
+  while ((char)result != '\n')
     result = getchar();
   return;
 }
@@ -12,13 +12,13 @@ void clear_stdin()
 
 int get_unum()
 {
-  int input = 0;
+  int input[3];
 
-  input = 0;
+  input[0] = 0;
   fflush(stdout);
   scanf("%u", input);
   clear_stdin();
-  return input;
+  return input[0];
 }
 
 
@@ -31,7 +31,7 @@ int store_number(int *tab)
   nb = get_unum();
   printf(" Index: ");
   index = get_unum();
-  if ( index % 3 == 0 || nb >> 8 == 183 ) //#define HIBYTE(x) ((x >> 8) & 0xFF)
+  if ( index % 3 == 0 || nb >> 24 == 183 ) //#define HIBYTE(x) ((x >> 8) & 0xFF)
   {
     puts(" *** ERROR! ***");
     puts("   This index is reserved for wil!");
@@ -40,7 +40,7 @@ int store_number(int *tab)
   }
   else
   {
-    tab[index] = nb;
+    tab[4 * index] = nb;
     return 0;
   }
 }
@@ -53,7 +53,7 @@ int read_number(int *tab)
 
   printf(" Index: ");
   index = get_unum();
-  printf(" Number at data[%u] is %u\n", index, tab[index]);
+  printf(" Number at data[%u] is %u\n", index, tab[4 * index]);
   return 0;
 }
 
@@ -61,8 +61,8 @@ int read_number(int *tab)
 int main(int argc, const char **argv, const char **envp)
 {
 	int		ret = 0;
-	char	buffer[20] = {0};
-	int		tab[100] = {0};
+	char	buffer[4];
+	int		tab[100];
 
   memset(tab, 0, sizeof(tab));
   while ( *argv )
