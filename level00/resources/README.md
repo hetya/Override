@@ -1,6 +1,6 @@
 After analyzing the program, we observed that it contains a condition as follows:
 
-```c
+``` C
     if (*((int *)&v1) != 5276)
     {
         puts("\nInvalid Password!");
@@ -10,7 +10,7 @@ After analyzing the program, we observed that it contains a condition as follows
 
 From this, we deduce that the correct answer is 5276. Let's try it:
 
-```
+``` Shell
 level00@OverRide:~$ ./level00 
 ***********************************
 *            -Level00 -           *
