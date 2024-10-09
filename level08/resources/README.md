@@ -1,4 +1,4 @@
-After opening the binary in dogbolt we can see that the program take a path in parameter and copy that file in a folder backup that has the same parent structure.
+After opening the binary in [dogbolt](dogbolt.org/) we can see that the program take a path in parameter and copy that file in a folder backup that has the same parent structure.
 So if I want to copy `myfile`:
 `/folder1/folder2/myfile`
 There must be a folder `backups` containing `/folder1/folder2/` like:
