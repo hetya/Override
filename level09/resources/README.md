@@ -35,6 +35,7 @@ Program received signal SIGSEGV, Segmentation fault.
 0x7fffffffe5c8: 0x37674136
 ```
 
+Since we are on 64-bit the return address is in `$rsp`
 Putting this in [wiremask](https://wiremask.eu/tools/buffer-overflow-pattern-generator/) give us an offset of `200`
 
 Now that we have the offset, we get the address of the function `secret_backdoor` that allow use to launch a command
